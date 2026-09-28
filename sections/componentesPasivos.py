@@ -1,66 +1,53 @@
 
-class ComponentesPasivos:
-    def __init__(self, resistencia, condensadores, inductores):
-        self.resistencia = resistencia
-        self.condensadores = condensadores
-        self.inductores = inductores
-        
-
-
 
 class Resistencia:
     def __init__(self, ohmios, potencia):
         self.ohmios = ohmios
         self.potencia = potencia
-
-    
-    def tipos_resistencia(self, tipo_resistencia):
-        While True:
-            print("*" * 80)
-            print("1) RESISTENCIA \n2) POTENCIOMETRO")
-            print("*" * 80)
-            try:
-                op = int(input("\nEscribe la opción: "))
-                if op == 1:
-                    print("Resistencia: ")
-    
-                    #Aquí iria la muestra de componentes de resistencia con su información
-                elif op == 2: 
-                    print("Potenciometros")
-                    #Aquí iría los potenciometros con sus ohmios y sus pines
-                elif op == 3 :
-                    print("Atras ")
-                    #Regreso hacia Atras, hacia el menu de los componentes, ya sea resistencias o capacitores.
-                    break
-                else:
-                    print("Opción invalida, escribe una opoción valida")
-            except valueError:
-                print("Debes ingresar un núnemro valido")
-
-
-    def lista_resistencia_disponibles(self):
-        print("\nEstas son las listas de Capicidad que existen: \n")
-    
-    def lista_potenciometros_disponibles(self, potenciometro):
-        return "hola"
-
-
+        self.tolerancia = 5
 
 
 class Potenciometro(Resistencia):
-    def __init__(self,ohmios, potencia, pines):
-        super().__init__(self,ohmios, potencia)
-        self.ohmios = ohmios
-        self.potencia = potencia
+    def __init__(self, ohmios, potencia, pines):
+        super().__init__(ohmios, potencia)
         self.pines = pines
 
-    def cantidad_pines(self, pines):
+    def __str__(self):
+        return f"Potenciometro {self.ohmios} Ohm, {self.potencia} W, Pines: {self.pines}"
 
 
+class Capacitor:
+    def __init__(self, tipo_capacitor, volt_max, capacitancia):
+        self.tipo_capacitor = tipo_capacitor
+        self.volt_max = volt_max
+        self.capacitancia = capacitancia
+
+    def clasificacion(self):
+
+        if self.tipo_capacitor.lower() == "electrolitico":
+            return self.capacitor_electrolitico()
+        elif self.tipo_capacitor.lower() == "ceramico nf":
+            return self.capacitor_ceramico_nf()
+        elif self.tipo_capacitor.lower() == "ceramico pf":
+            return self.capacitor_ceramico_pf()
+
+    def capacitor_electrolitico(self):
+        return f"Capacitor {self.capacitancia} mF, Voltaje Max: {self.volt_max}\n"
+
+    def capacitor_ceramico_nf(self):
+        return f"Capacitor Ceramico: {self.capacitancia} nF(nano faradio), Voltaje Max: {self.volt_max}\n"
+
+    def capacitor_ceramico_pf(self):
+        return f"Capacitor Ceramico: {self.capacitancia} pF (pico faradio), Voltaje Max: {self.volt_max}\n"
 
 
+if __name__ == "__main__":
 
+    capacitor = Capacitor("ceramico nf", 25, 100)
+    capacitorDos = Capacitor("ceramico pf", 30, 101)
 
+    potenciometro = Potenciometro(120, 32, 3)
 
-
-
+    print(capacitor.clasificacion())
+    print(capacitorDos.clasificacion())
+    print(potenciometro)
