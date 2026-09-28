@@ -1,31 +1,20 @@
 # Clasificación de componentes
+from componentesPasivos import Resistencia, Potenciometro
 
 
 class Componentes:
-    def __init__(self,tipo_componente):
+    def __init__(self, tipo_componente, cantidad):
         self.tipo_componente = tipo_componente
         self.cantidad = 0
-    
-    def componente_pasivo(self):
-        # Componentes como resistencias,condensadores, bobinas e inductores
-        return None
-    
-    def componente_activos(self):
-        # Componentes como transitores, diodos
-        return None
-    
-    def componentes_integrados(self):
-        # Compuertas lógicas, opams, Esp32, Arduino uno.
-        return
-            
 
+    def agregar_stock(self, n):
+        self.cantidad += n
 
-
-
-
+    def quitar_stock(self, n):
+        if n > self.cantidad:
+            raise ValueError(f"No hay suficientes componentes {
+                             self.tipo_componente}")
+        self.cantidad -= n
 
 
 if __name__ == "__main__":
-
-  
-    
