@@ -2,7 +2,7 @@
 
 
 class Transitor:
-    def __init__(self, nomenclatura, tipo_transitor):
+    def __init__(self, nomenclatura, tipo_transitor, cantidad=0, ubicacion=""):
         self.nomenclatura = nomenclatura
         self.tipo_transitor = tipo_transitor
 
@@ -22,7 +22,7 @@ class Transitor:
 
 
 class Diodo:
-    def __init__(self, tipo_diodo):
+    def __init__(self, tipo_diodo, cantidad=0, ubicacion=""):
         self.tipo_diodo = tipo_diodo
 
     def __str__(self):
@@ -39,6 +39,8 @@ class Led(Diodo):
         # consumo_voltaje,
         # consumo_amp = 0.2,
         unidad_amp,
+        cantidad=0,
+        ubicacion="",
     ):
         super().__init__(tipo_diodo)
         self.pines = pines
@@ -78,6 +80,8 @@ class Led(Diodo):
                 return " 3.2 - 3.6"
             case "morado":
                 return "3.4-4.0"
+            case "rgb":
+                return "5"
             case _:
                 return "Color DESCONOCIDO"
 
