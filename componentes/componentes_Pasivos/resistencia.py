@@ -1,9 +1,13 @@
 class Resistencia:
-    def __init__(self, ohmios, unidad, potencia, tolerancia):
+    def __init__(
+        self, ohmios, unidad, potencia, tolerancia, cantidad=None, ubicacion=""
+    ):
         self.ohmios = ohmios
         self.unidad = unidad
         self.potencia = potencia
         self.tolerancia = tolerancia
+        self.cantidad = cantidad
+        self.ubicacion = ubicacion
 
     def __str__(self):
         if self.unidad == "ohm":
@@ -17,8 +21,10 @@ class Resistencia:
 
 
 class Potenciometro(Resistencia):
-    def __init__(self, ohmios, potencia, unidad, pines, cantidad=0, ubicacion=""):
-        super().__init__(ohmios, potencia, unidad)
+    def __init__(
+        self, ohmios, unidad, potencia, tolerancia, pines, cantidad=0, ubicacion=""
+    ):
+        super().__init__(ohmios, unidad, potencia, tolerancia, cantidad, ubicacion)
         self.pines = pines
 
     def __str__(self):
