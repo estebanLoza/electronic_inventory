@@ -3,11 +3,21 @@ class Capacitor:
     Conceptos generales de los componentes capacitor
     """
 
-    def __init__(self, tipo_capacitor, volt_max, capacitancia, unidad):
+    def __init__(
+        self,
+        tipo_capacitor,
+        volt_max,
+        capacitancia,
+        unidad,
+        cantidad=None,
+        ubicacion="",
+    ):
         self.tipo_capacitor = tipo_capacitor
         self.volt_max = volt_max
         self.capacitancia = capacitancia
         self.unidad = unidad
+        self.cantidad = cantidad
+        self.ubicacion = ubicacion
 
     def __str__(self):
         if self.tipo_capacitor.lower() == "electrolitico":
