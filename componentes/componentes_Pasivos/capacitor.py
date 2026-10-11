@@ -35,3 +35,12 @@ class Capacitor:
 
     def capacitor_ceramico_pf(self):
         return f"Capacitor Ceramico: {self.capacitancia} {self.unidad} (pico faradio), Voltaje Max: {self.volt_max}\n"
+
+    def clave(self):
+        return (
+            "Capacitor ",
+            self.tipo_capacitor.lower(),
+            self.capacitancia,
+            self.unidad,
+            self.volt_max,
+        )
