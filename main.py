@@ -1,66 +1,132 @@
-# Importación dde las secciones
-
 from sections.catalogo_Activos import CatalogoActivos
+from sections.catalogo_Pasivos import CatalogoPasivos
+from componentes.componentes_Activos.diodo import DiodoZener
 from componentes.componentes_Pasivos.resistencia import Resistencia
 
-# Creando la clase de los catalogos
-catalogo = CatalogoActivos()
 
-catalogo.agregar(Resistencia(220, "ohm", 0.25, 5, cantidad=100))
-catalogo.agregar(Resistencia(220, "ohm", 0.25, 5, cantidad=50))  # Se suma: 150
+activos = CatalogoActivos()
+pasivos = CatalogoPasivos()
 
-
-r = Resistencia(220, "ohm", 0.25, 5)
-if catalogo.quitar(r.clave(), 30):
-    print("Listo")
-else:
-    print("No existe o no hay suficientes unidades. ")
+# Entrada
 
 
-def opcion_agregar_zener():
-    nomenclatura = input("Nomenclatura: ")
-    voltaje = float(input("Voltaje nominal: "))
-    potencia = float(input("Potencia(W): "))
-    tolerancia = float(input("Tolerancia (%): "))
-    cantidad = int(input("Cantidad: "))
+def pedir_numero(texto, tipo=float):
+    """
+    Repite la pregunta hasta que el usuario escriba un número válido.
+    """
 
-    zener = DiodoZener(nomenclatura, voltaje, potencia, tolerancia, cantidad)
-    catalogo.agregar(zener)
-    print("Agregado")
+    while True:
+        try:
+            return tipo(input(texto))
+        except ValueError:
+            print("⚠️ Valor inválido, intenta de nuevo. ")
 
 
-def opcion_quitar():
-    modelo = input("Modelo a quitar: ")
-    cantidad = int(input("Cantidad: "))
+# Logo
 
-    if catalogo.quitar(modelo, cantidad):
-        print("Listo.")
+
+def mostrar_logo():
+    print("=" * 44)
+    print("    ⚡ INVENTARIO ELECTRÓNICO ⚡".center(44))
+    print("=" * 44)
+
+
+## Opciones: Componentes Activos
+
+
+def agregar_zener():
+    nomenclatura = input("Nomenclatura: ").strip()
+    voltaje = pedir_numero("Voltaje nominal (V): ")
+    potencia = pedir_numero("Potencia (W): ")
+    tolerancia = pedir_numero("Tolerancia(%): ")
+    cantidad = pedir_numero("Cantidad: ", int)
+
+    activos.agregar(DiodoZener(nomenclatura, voltaje, potencia, tolerancia, cantidad))
+    print("✅ Zener Agregado.")
+
+
+def quitar_activo():
+    modelo = input("Nomenclatura a quitar: ").strip()
+    cantidad = pedir_numero("Cantidad: ", int)
+
+    if activos.quitar(modelo, cantidad):
+        print("✅  Listo.")
     else:
-        print("No existe ese modelo o no hay suficientes unidades.")
+        print("❌ No existe ese modelo o no hay suficientes unidades.")
+
+
+## OPciones pasivos
+
+
+def agregar_resistencia():
+    ohmios = pedir_numero("Valor: ")
+    unidad = input("Unidad (ohm/kOhm/MOhm): ").strip()
+    potencia = pedir_numero("Potencia (W): ")
+    tolerancia = pedir_numero("Tolerancia (%): ")
+    cantidad = pedir_numero("Cantida: ", int)
+
+    pasivos.agregar(Resistencia(ohmios, unidad, potencia, tolerancia, cantidad))
+
+    print("✅ Resistencia agregada")
+
+
+def quitar_resistencia():
+    ohmios = pedir_numero("Valor: ")
+    unidad = input("Unidad (ohm/ kOhm/ MOhm): ").strip()
+    potencia = pedir_numero("Potencia (W): ")
+    tolerancia = pedir_numero("Tolerancia: (%): ")
+    cantidad = pedir_numero("Cantidad a quitar: ", int)
+
+    molde = Resistencia(ohmios, unidad, potencia, tolerancia)
+    if pasivos.quitar(molde.clave(), cantidad):
+        print("✅ Listo.")
+    else:
+        print("❌ No existe ese modelo o no hay suficientes unidades.")
+
+
+# ---- Resumenes
+
+
+def ver_resumen():
+    print("\n ---- Activos ----")
+    for nombre, cant in activos.cantidad_por_tipo().items():
+        print(f" {nombre}: {cant}")
+    print(f"    Total: {activos.cantidad_total()}")
+
+    print("\n --- Pasivos ---")
+    for nombre, cant in pasivos.cantidad_por_tipo().items():
+        print(f" {nombre}: {cant}")
+    print(f" Total: {pasivos.cantidad_total()}")
+
+
+OPCIONES = {
+    "1": ("Agregar diodo zener", agregar_zener),
+    "2": ("Quitar componente", quitar_activo),
+    "3": ("Agregar resistencia", agregar_resistencia),
+    "4": ("Quitar resistencia", agregar_resistencia),
+    "5": ("Ver resumen de inventario", ver_resumen),
+}
 
 
 def menu():
-    print("*" * 150)
-    print(
-        " " * 50
-        + """
+    while True:
+        print()
+        mostrar_logo()
+        for clave, (texto, _) in OPCIONES.items():
+            print(f"  {clave})  {texto}")
+        print("  0) Salir")
 
-        ██████████  ██          ██████████    ██████    ██████████  ████████      ██████    ██      ██  ██████    ██████    
-        █ ████████  ██          █ ████████    ██████    ████  ████  █ ██████      ██████    ██      ██  ██  ██    ██████    
-        ██          ██          ██          ██              ██      ██      ██  ██      ██  █ ██    ██    ██    ██          
-        ██          ██          ██          ██              ██      ██      ██  ██      ██  █ ██    ██    ██    ██          
-        █ ██████    ██          █ ██████    ██              ██      █ ██████    ██      ██  ██  ██  ██    ██    ██          
-        █ ██████    ██          █ ██████    ██              ██      █ ████ █    ██      ██  ██  ██  ██    ██    ██          
-        ██          ██          ██          ██              ██      ██    ██    ██      ██  ██    ██ █    ██    ██          
-        ██          ██          ██          ██              ██      ██    ██    ██      ██  ██    ██ █    ██    ██          
-        █ ████████  █ ████████  █ ████████    ██████        ██      ██      ██    ██████    ██      ██  ██  ██    ██████    
-        ██████████  ██████████  ██████████    ██████        ██      ██      ██    ██████    ██      ██  ██████    ██████            
-    """
-    )
-    print("*" * 150)
+        opcion = input("\n Opción: ").strip()
 
-    opcion_agregar_zener()
-    opcion_quitar()
+        if opcion == "0":
+            print("Hasta Luego 👋")
+            break
+        elif opcion in OPCIONES:
+            OPCIONES[opcion][1]()
+            input("\nEnter para continuar...")
+        else:
+            print("⚠️  Opción inválida.")
 
 
-menu()
+if __name__ == "__main__":
+    menu()
