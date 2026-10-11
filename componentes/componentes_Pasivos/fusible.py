@@ -14,3 +14,12 @@ class Fusible:
             🔶 Medida: {self.medida} mm
             
         """
+
+    def clave(self):
+        return (
+            "fusible",
+            self.tipo_fusible.lower(),
+            self.volt_max,
+            self.amperaje,
+            self.medida,
+        )
