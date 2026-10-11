@@ -1,2 +1,6 @@
 .pyre/
-.pyc/
+.pyc
+
+# Carpetas de caché de Python.
+
+__pycache__/
