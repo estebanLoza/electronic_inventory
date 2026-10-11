@@ -78,7 +78,7 @@ class DiodoZener(Diodo):
         voltaje_tipico,
         potencia,
         tolerancia,
-        cantidad=None,
+        cantidad=0,
         ubicacion="",
     ):
         super().__init__(tipo_diodo)
@@ -93,7 +93,7 @@ class DiodoZener(Diodo):
         return f"""
                     ************** DIODO ZENER ***********
                     Nomenclatura: {self.nomenclatura}
-                    Voltaje Nominal: {self.voltaje_nominal}
+                    Voltaje Nominal: {self.voltaje_tipico}
                     Potencia: {self.potencia}
                     Tolerancia: {self.tolerancia}
                     Cantidad: {self.cantidad}
