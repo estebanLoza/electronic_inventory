@@ -21,7 +21,7 @@ class Led(Diodo):
         # consumo_voltaje,
         # consumo_amp = 0.2,
         unidad_amp,
-        cantidad=0,
+        cantidad=None,
         ubicacion="",
     ):
         super().__init__(tipo_diodo)
@@ -31,6 +31,8 @@ class Led(Diodo):
         # self.consumo_voltaje = consumo_voltaje
         self.consumo_amp = 0.2
         self.unidad_amp = unidad_amp
+        self.cantidad = cantidad
+        self.ubicacion = ubicacion
 
     def __str__(self):
 
@@ -69,10 +71,31 @@ class Led(Diodo):
 
 
 class DiodoZener(Diodo):
-    def __init__(self, nomenclatura, voltaje_tipico, potencia, tolerancia):
+    def __init__(
+        self,
+        tipo_diodo,
+        nomenclatura,
+        voltaje_tipico,
+        potencia,
+        tolerancia,
+        cantidad=None,
+        ubicacion="",
+    ):
+        super().__init__(tipo_diodo)
         self.nomenclatura = nomenclatura
-        self.voltaje_nominal = voltaje_tipico
+        self.voltaje_tipico = voltaje_tipico
         self.potencia = potencia
         self.tolerancia = tolerancia
-        self.cantidad = 0
-        self.ubicacion = ""
+        self.cantidad = cantidad
+        self.ubicacion = ubicacion
+
+    def __str__(self):
+        return f"""
+                    ************** DIODO ZENER ***********
+                    Nomenclatura: {self.nomenclatura}
+                    Voltaje Nominal: {self.voltaje_nominal}
+                    Potencia: {self.potencia}
+                    Tolerancia: {self.tolerancia}
+                    Cantidad: {self.cantidad}
+                    Ubicacion: {self.ubicacion}
+        """
