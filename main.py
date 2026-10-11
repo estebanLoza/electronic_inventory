@@ -1,10 +1,20 @@
 # Importación dde las secciones
 
 from sections.catalogo_Activos import CatalogoActivos
-# from sections.catalogo_Pasivos import CatalogoPasivos
+from componentes.componentes_Pasivos.resistencia import Resistencia
 
 # Creando la clase de los catalogos
 catalogo = CatalogoActivos()
+
+catalogo.agregar(Resistencia(220, "ohm", 0.25, 5, cantidad=100))
+catalogo.agregar(Resistencia(220, "ohm", 0.25, 5, cantidad=50))  # Se suma: 150
+
+
+r = Resistencia(220, "ohm", 0.25, 5)
+if catalogo.quitar(r.clave(), 30):
+    print("Listo")
+else:
+    print("No existe o no hay suficientes unidades. ")
 
 
 def opcion_agregar_zener():

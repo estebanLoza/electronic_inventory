@@ -9,7 +9,7 @@ class Capacitor:
         volt_max,
         capacitancia,
         unidad,
-        cantidad=None,
+        cantidad=0,
         ubicacion="",
     ):
         self.tipo_capacitor = tipo_capacitor
@@ -19,6 +19,15 @@ class Capacitor:
         self.cantidad = cantidad
         self.ubicacion = ubicacion
 
+    def clave(self):
+        return (
+            "Capacitor ",
+            self.tipo_capacitor.lower(),
+            self.capacitancia,
+            self.unidad,
+            self.volt_max,
+        )
+
     def __str__(self):
         if self.tipo_capacitor.lower() == "electrolitico":
             return self.capacitor_electrolitico()
@@ -26,6 +35,11 @@ class Capacitor:
             return self.capacitor_ceramico_nf()
         elif self.tipo_capacitor.lower() == "ceramico" and self.unidad == "pf":
             return self.capacitor_ceramico_pf()
+        else:
+            return (
+                f"Capacitor {self.tipo_capacitor}: {self.capacitancia} {self.unidad},"
+                f"Voltaje Max: {self.volt_max}\n"
+            )
 
     def capacitor_electrolitico(self):
         return f"Capacitor {self.capacitancia} mF, Voltaje Max: {self.volt_max}\n"
@@ -35,12 +49,3 @@ class Capacitor:
 
     def capacitor_ceramico_pf(self):
         return f"Capacitor Ceramico: {self.capacitancia} {self.unidad} (pico faradio), Voltaje Max: {self.volt_max}\n"
-
-    def clave(self):
-        return (
-            "Capacitor ",
-            self.tipo_capacitor.lower(),
-            self.capacitancia,
-            self.unidad,
-            self.volt_max,
-        )
