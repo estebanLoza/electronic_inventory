@@ -19,6 +19,9 @@ class Resistencia:
         else:
             return "Esa clasificación no existe (Al menos no por el momento)"
 
+    def clave(self):
+        return ("resistencia", self.ohmios, self.unidad, self.potencia, self.tolerancia)
+
 
 class Potenciometro(Resistencia):
     def __init__(
@@ -29,3 +32,13 @@ class Potenciometro(Resistencia):
 
     def __str__(self):
         return f"Potenciometro {self.ohmios} {self.unidad}, {self.potencia} W, Pines: {self.pines}"
+
+    def clave(self):
+        return (
+            "potenciometro",
+            self.ohmios,
+            self.unidad,
+            self.potencia,
+            self.tolerancia,
+            self.pines,
+        )
