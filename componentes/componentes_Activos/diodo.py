@@ -69,21 +69,23 @@ class Led(Diodo):
             case _:
                 return "Color DESCONOCIDO"
 
+    def clave(self):
+        return ("led", self.color, self.dimension, self.pines)
+
 
 class DiodoZener(Diodo):
     def __init__(
         self,
-        tipo_diodo,
         nomenclatura,
-        voltaje_tipico,
+        voltaje_nominal,
         potencia,
         tolerancia,
         cantidad=0,
         ubicacion="",
     ):
-        super().__init__(tipo_diodo)
+        super().__init__("zener")
         self.nomenclatura = nomenclatura
-        self.voltaje_tipico = voltaje_tipico
+        self.voltaje_nominal = voltaje_nominal
         self.potencia = potencia
         self.tolerancia = tolerancia
         self.cantidad = cantidad
@@ -93,9 +95,12 @@ class DiodoZener(Diodo):
         return f"""
                     ************** DIODO ZENER ***********
                     Nomenclatura: {self.nomenclatura}
-                    Voltaje Nominal: {self.voltaje_tipico}
+                    Voltaje Nominal: {self.voltaje_nominal}
                     Potencia: {self.potencia}
                     Tolerancia: {self.tolerancia}
                     Cantidad: {self.cantidad}
                     Ubicacion: {self.ubicacion}
         """
+
+    def clave(self):
+        return ("zener", self.nomenclatura)
