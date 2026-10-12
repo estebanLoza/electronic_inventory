@@ -7,19 +7,32 @@ class Resistencia:
         self.cantidad = cantidad
         self.ubicacion = ubicacion
 
+    def clave(self):
+        return (
+            "resistencia",
+            self.ohmios,
+            self.unidad,
+            self.potencia,
+            self.tolerancia,
+        )
+
     def __str__(self):
         return (
             f"Resistencia {self.ohmios} {self.unidad}, "
             f"Potencia {self.potencia} W, Tolerancia: {self.tolerancia} %\n"
         )
 
-    def clave(self):
-        return ("resistencia", self.ohmios, self.unidad, self.potencia, self.tolerancia)
-
 
 class Potenciometro(Resistencia):
     def __init__(
-        self, ohmios, unidad, potencia, tolerancia, pines, cantidad=0, ubicacion=""
+        self,
+        ohmios,
+        unidad,
+        potencia,
+        tolerancia,
+        pines,
+        cantidad=0,
+        ubicacion="",
     ):
         super().__init__(ohmios, unidad, potencia, tolerancia, cantidad, ubicacion)
         self.pines = pines
@@ -35,4 +48,7 @@ class Potenciometro(Resistencia):
         )
 
     def __str__(self):
-        return f"Potenciometro {self.ohmios} {self.unidad}, {self.potencia} W, Pines: {self.pines}"
+        return (
+            f"Potenciometro {self.ohmios} {self.unidad}, "
+            f"{self.potencia} W, Pines: {self.pines}\n"
+        )
