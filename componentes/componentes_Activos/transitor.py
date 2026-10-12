@@ -37,6 +37,9 @@ class TransitorBJT(Transitor):
                 Corriente Max: {self.corriente_max}
                """
 
+    def clave(self):
+        return ("bjt", self.nomenclatura)
+
 
 class TransitorMosfet(Transitor):
     def __init__(
@@ -65,3 +68,6 @@ class TransitorMosfet(Transitor):
                 Volt Umbral: {self.volt_umbral}
                 Gate Charge: {self.gate_charge}
         """
+
+    def clave(self):
+        return ("mosfet", self.nomenclatura)
